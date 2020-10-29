@@ -10,12 +10,32 @@ const fetchGift = async () => {
 
   query.find().then(function(gifts){
       if(gifts){
+        var div = document.querySelector('.gifts');
+        div.setAttribute('class', 'container-fluid retailer-list');
+        var row = document.createElement('div');
+        row.setAttribute('class', 'row');
         gifts.forEach(gift => {
           //je log les objects. 
           // pour recuperer un atribut, tu fait gift.get("nom_attribut")
           // 
-          console.log(gift);
+          var col = document.createElement('div');
+          col.setAttribute('class', 'col-sm-6');
+          var content = document.createElement('div');
+          content.setAttribute('class', 'retailer-thumbnail d-flex align-items-content justify-content-center');
+          var img = document.createElement('img');
+          img.setAttribute('src', 'img/placeholders/360x120.png');
+          var title =  document.createElement('h4');
+          title.setAttribute('class', 'text-center');
+          title.innerHTML = gift.get("name");
+          content.appendChild(img);
+          col.appendChild(content);
+          col.appendChild(title);
+
+          row.appendChild(col);
+
+          console.log(gift.get("name"));
         });
+        div.appendChild(row);
       } else {
           console.log("Nothing found, please try again");
       }
