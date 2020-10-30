@@ -11,68 +11,57 @@ const fetchGift = async () => {
   query.find().then(function(gifts){
       if(gifts){
         var div = document.querySelector('.gifts');
-        div.setAttribute('class', 'container-fluid retailer-list');
-        var row = document.createElement('div');
-        row.setAttribute('class', 'row');
+      
         gifts.forEach(gift => {
           //je log les objects. 
           // pour recuperer un atribut, tu fait gift.get("nom_attribut")
           // 
           var col = document.createElement('div');
-          col.setAttribute('class', "col-sm-3 block");
-          
-          let top = document.createElement('div');
-          top.setAttribute('class', "top");
-          let middle = document.createElement('div');
-          middle.setAttribute('class', "middle");
-          let bottom = document.createElement('div');
-          bottom.setAttribute('class', "bottom");
-          let ul = document.createElement('ul');
-          let first_li = document.createElement('li');
-          let second_li = document.createElement('li');
-          let span = document.createElement('span');
-          span.setAttribute('class',"converse");
+          col.setAttribute('class', 'col-sm-4');
+          var content = document.createElement('div');
+          content.setAttribute('class', 'block');
+          var top = document.createElement('div');
+          top.setAttribute('class', 'top'); 
+          var span = document.createElement('span');
+          span.setAttribute('class', 'converse');
           span.innerHTML = gift.get("source");
-          second_li.appendChild(span);
-          let third_li = document.createElement('li');
+          top.appendChild(span);
+          
+          var middle = document.createElement('div');
+          middle.setAttribute('class', 'middle');
 
-          ul.appendChild(first_li);
-          ul.appendChild(second_li);
-          ul.appendChild(third_li);
-
-          top.appendChild(ul);
-
-          let image = document.createElement('img');
+          var image = document.createElement('img');
           image.setAttribute('src', `${gift.get('image').url()}`);
           image.setAttribute('alt', `${gift.get('name')}`);
 
           middle.appendChild(image);
 
-          let title = document.createElement('div','heading');
-          title.innerHTML = gift.get('name');
-          let detail = document.createElement('div', 'info');
-          detail.innerHTML = gift.get('details');
-          let status = document.createElement('div', "style");
-          if(gift.get('status') == "available"){
-            status.innerHTML = "Status : Disponible";
-          }else{
-            status.innerHTML = "Status : Déjà offert";
-          }
-          let price = document.createElement('div', "price");
-          price.innerHTML = `${ gift.get('price')} FCFA`
-          
-          bottom.appendChild(title);
-          bottom.appendChild(detail);
-          bottom.appendChild(status);
+          content.appendChild(top);
+          content.appendChild(middle);
+    
+          var bottom = document.createElement('div');
+          bottom.setAttribute('class', 'bottom');
+          var heading = document.createElement('div');
+          heading.setAttribute('class', 'heading');
+          heading.innerHTML = gift.get("name");
+          var quantity = document.createElement('div');
+          quantity.setAttribute('class', 'style');
+          quantity.innerHTML = "Quantité: "+gift.get("quantity")+"  Statut: "+gift.get("status");
+
+          var price = document.createElement('div');
+          price.setAttribute('class', 'price');
+          price.innerHTML = gift.get("price")+" FCFA";
+
+          bottom.appendChild(heading);
+          bottom.appendChild(quantity);
           bottom.appendChild(price);
 
-          col.appendChild(top);
-          col.appendChild(middle);
-          col.appendChild(bottom);
-
-          row.appendChild(col);
+          content.appendChild(bottom);
+          col.appendChild(content);
+          div.appendChild(col);
+          console.log(gift);
         });
-        div.appendChild(row);
+       
       } else {
           console.log("Nothing found, please try again");
       }
