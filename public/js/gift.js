@@ -31,7 +31,7 @@ const fetchGift = async () => {
           middle.setAttribute('class', 'middle');
 
           var img = document.createElement('img');
-          img.setAttribute('src', 'img/placeholders/360x120.png');
+          img.setAttribute('src',gift.get("image")._url);
 
           middle.appendChild(img);
 
@@ -45,7 +45,7 @@ const fetchGift = async () => {
           heading.innerHTML = gift.get("name");
           var quantity = document.createElement('div');
           quantity.setAttribute('class', 'style');
-          quantity.innerHTML = "Quantité: "+gift.get("quantity");
+          quantity.innerHTML = "Quantité: "+gift.get("quantity")+"  Statut: "+gift.get("status");
 
           var price = document.createElement('div');
           price.setAttribute('class', 'price');
@@ -58,7 +58,7 @@ const fetchGift = async () => {
           content.appendChild(bottom);
           col.appendChild(content);
           div.appendChild(col);
-          console.log(gift.get());
+          console.log(gift);
         });
        
       } else {
